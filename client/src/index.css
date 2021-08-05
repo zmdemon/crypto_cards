@@ -1,0 +1,33 @@
+@import '~materialize-css/dist/css/materialize.min.css';
+
+.auth-input {
+  color: whitesmoke;
+}
+
+.auth-input + label{
+  color: whitesmoke;
+}
+
+.auth-input:focus + label {
+  color: honeydew!important;
+}
+
+.auth-input:focus {
+  border-bottom: 1px solid lightyellow!important;
+  box-shadow: 0 1px 0 0 lightgoldenrodyellow!important;
+}
+
+.modal { width: 40% !important ; height: 60% !important ; }
+
+.dropdown-content, #rare_selection_id {
+  max-height: 450px !important;
+  overflow-y: auto !important;
+  -webkit-backface-visibility: hidden !important;
+  backface-visibility: hidden !important;
+}
+
+.collection {
+
+  overflow: visible !important;
+  position: static !important;
+}

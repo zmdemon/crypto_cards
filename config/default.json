@@ -1,0 +1,6 @@
+{
+  "port": 5000,
+  "jwtSecret": "rare state swag boom",
+  "baseUrl": "http://localhost:5000",
+  "mongoUri": "mongodb+srv://zm-admin:sqwerty666@cluster0.hx2ua.mongodb.net/crypto-database?retryWrites=true&w=majority"
+}
