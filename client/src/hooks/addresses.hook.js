@@ -11,7 +11,9 @@ const {request} = useHttp()
             const data = await request('/api/address/', 'GET', null, {
                 Authorization: `Bearer ${token}`
             })
-            setAddressesList(data)
+            setAddressesList(data.map(item => {
+                return {...item, disabled: false}
+            }))
         } catch (e) {
             console.log(e.message)
 
@@ -19,5 +21,5 @@ const {request} = useHttp()
     }, [])
 
 
-    return { getAddresses, addressesList }
+    return { getAddresses, addressesList, setAddressesList }
 }

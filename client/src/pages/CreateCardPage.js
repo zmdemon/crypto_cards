@@ -14,15 +14,16 @@ export const CreateCardPage = () => {
 
     // const selectRef = useRef()
     const [selectedArray, setSelectedArray] = useState([])
-    const {getAddresses, addressesList} = useAddresses()
+    const {getAddresses, addressesList, setAddressesList} = useAddresses()
     const [addressesListState, setAddressesListState] = useState([])
     const [description, setDescription] = useState("")
     const [cardTitle, setCardTitle] = useState("")
 
-    const aListPlusD = addressesList.map(item=>{
-        return {...item, disabled: false}
-    })
-    const grouped = _.mapValues(_.groupBy(aListPlusD, 'currency'),
+    // const aListPlusD = addressesList.map(item => {
+    //     return {...item, disabled: false}
+    // })
+
+    const grouped = _.mapValues(_.groupBy(addressesList, 'currency'),
         clist => clist.map(address => _.omit(address, 'currency')));
 
     // const optionArray = makeOptions()
@@ -32,7 +33,7 @@ export const CreateCardPage = () => {
     }, [])
 
     useEffect(() => {
-        console.log(aListPlusD)
+        console.log(addressesList)
         M.FormSelect.init(selectRef.current)
     })
 
@@ -53,11 +54,23 @@ export const CreateCardPage = () => {
         )[0]
         const addressObject = addressesList.filter((it) => it.address === addressString)[0]
         setSelectedArray(previous => [...previous, addressObject])
+        setAddressesList(addressesList.map(item => {
+            if (item._id === addressObject._id) {
+                return {...item, disabled: true}
+            } else return item
+        }))
 
     }
 
     const onDeleteIconClick = (id) => {
         setSelectedArray(selectedArray.filter((item) => item._id !== id))
+
+        setAddressesList(addressesList.map(item => {
+            if (item._id === id) {
+                return {...item, disabled: false}
+            } else return item
+        }))
+
         console.log(selectedArray)
     }
 
@@ -159,17 +172,7 @@ export const CreateCardPage = () => {
                             </div>
 
                         </li>
-                        <li key="2li" className="collection-item">
 
-                            <button key="2btn" onClick={() => {
-                                setAddressesListState(addressesList)
-                                console.log("it is: ", addressesListState)
-
-                            }}>
-                                + add new
-                            </button>
-
-                        </li>
 
                     </ul>
                 </div>
