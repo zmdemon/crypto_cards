@@ -19,22 +19,21 @@ export const CreateCardPage = () => {
     const [description, setDescription] = useState("")
     const [cardTitle, setCardTitle] = useState("")
 
-
-    const grouped = _.mapValues(_.groupBy(addressesList, 'currency'),
+    const aListPlusD = addressesList.map(item=>{
+        return {...item, disabled: false}
+    })
+    const grouped = _.mapValues(_.groupBy(aListPlusD, 'currency'),
         clist => clist.map(address => _.omit(address, 'currency')));
 
     // const optionArray = makeOptions()
 
-
     useEffect(() => {
         getAddresses(auth.token)
-
     }, [])
 
     useEffect(() => {
-        console.log(grouped)
+        console.log(aListPlusD)
         M.FormSelect.init(selectRef.current)
-
     })
 
     // useEffect(() => {
@@ -57,19 +56,26 @@ export const CreateCardPage = () => {
 
     }
 
+    const onDeleteIconClick = (id) => {
+        setSelectedArray(selectedArray.filter((item) => item._id !== id))
+        console.log(selectedArray)
+    }
+
     const selectedAddressesLis = selectedArray.map((item) => {
-        return (<li className="collection-item" key={item.id}>
-            <div key={item.id + 2}>{item.currency} - {item.address}<a
-                key={item.id + 1} href="#!"
-                className="secondary-content"><i key={item.id + 3}
-                                                 className="material-icons">delete</i></a>
+        return (<li className="collection-item" key={item._id}>
+            <div key={item._id + 2}>{item.currency} - {item.address}<a
+                key={item._id + 1} href="#!"
+                onClick={() => onDeleteIconClick(item._id)}
+                className="secondary-content">
+                <i key={item._id + 3}
+                   className="material-icons red-text">delete</i></a>
             </div>
         </li>)
     })
 
     const RareOption = ({crypto}) => {
         return (
-            <option value={crypto.id}>"{crypto.nickname}" {crypto.address}</option>
+            <option value={crypto._id}>"{crypto.nickname}" {crypto.address}</option>
         )
     }
     const RareOptGroup = ({label, currencyGroup}) => {
@@ -96,13 +102,12 @@ export const CreateCardPage = () => {
         return (
             <optgroup label={item[0].toString()} key={item[0].toString()}>
                 {item[1].map(crypto => {
-                    return <option value={crypto.id} key={crypto.id}>"{crypto.nickname}" {crypto.address}</option>
+                    return <option value={crypto.id} key={crypto.id}
+                                   disabled={crypto.disabled}>"{crypto.nickname}" {crypto.address}</option>
                 })}
             </optgroup>
         )
     })
-
-
 
 
     // function makeOptions() {
@@ -123,7 +128,6 @@ export const CreateCardPage = () => {
     // }
 
 
-
     return (
         <div className="row">
             <h1>Create Card</h1>
@@ -132,7 +136,7 @@ export const CreateCardPage = () => {
                 <div className="input-field col s12 center">
 
                     <label htmlFor="titlew">Title</label>
-                    <input type="text" id="titlew" value={cardTitle} onChange={e=>setCardTitle(e.target.value)}/>
+                    <input type="text" id="titlew" value={cardTitle} onChange={e => setCardTitle(e.target.value)}/>
                 </div>
 
 
@@ -171,10 +175,15 @@ export const CreateCardPage = () => {
                 </div>
 
                 <div className="input-field col s12">
-                    <textarea id="textarea1" className="materialize-textarea" value={description} onChange={e=>setDescription(e.target.value)}/>
-                    <label htmlFor="textarea1" >Description for Card</label>
+                    <textarea id="textarea1" className="materialize-textarea" value={description}
+                              onChange={e => setDescription(e.target.value)}/>
+                    <label htmlFor="textarea1">Description for Card</label>
                 </div>
-
+                <div className="input-field col s12">
+                    <button className="btn waves-effect waves-light deep-purple" type="submit" name="action">Create
+                        <i className="material-icons right">send</i>
+                    </button>
+                </div>
 
 
             </div>
