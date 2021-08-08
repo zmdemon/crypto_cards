@@ -1,12 +1,14 @@
 const {Schema, model, Types} = require('mongoose')
 
-const schema = new Schema({
-    to: {type: String, required: true, unique: true},
+const cardSchema = new Schema({
+    title: {type: String, required: true, unique: false},
+    selectedArray: [{type: Types.ObjectId, ref: "Address"}],
+    description: {type: String, required: false, unique: false},
+    cardLink: {type: String, required: true, unique: true},
     code: {type: String, required: true, unique: true},
     date: {type: Date, default: Date.now},
     clicks: {type: Number, default: 0},
     owner: {type: Types.ObjectId, ref: 'User'},
-    addresses: [{type: Types.ObjectId, ref: "Address"}]
 })
 
-module.exports = model('Card', schema)
+module.exports = model('Card', cardSchema)

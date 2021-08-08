@@ -3,30 +3,27 @@ import React, {useContext, useEffect, useRef, useState} from 'react'
 import {AuthContext} from "../context/AuthContext";
 import M from "materialize-css";
 import {useAddresses} from "../hooks/addresses.hook";
+import {useHttp} from "../hooks/http.hook";
+
 
 const _ = require('lodash');
 
 
 export const CreateCardPage = () => {
     const selectRef = useRef(null)
-
+    const {request} = useHttp()
     const auth = useContext(AuthContext)
 
-    // const selectRef = useRef()
     const [selectedArray, setSelectedArray] = useState([])
     const {getAddresses, addressesList, setAddressesList} = useAddresses()
     const [addressesListState, setAddressesListState] = useState([])
     const [description, setDescription] = useState("")
     const [cardTitle, setCardTitle] = useState("")
 
-    // const aListPlusD = addressesList.map(item => {
-    //     return {...item, disabled: false}
-    // })
 
     const grouped = _.mapValues(_.groupBy(addressesList, 'currency'),
         clist => clist.map(address => _.omit(address, 'currency')));
 
-    // const optionArray = makeOptions()
 
     useEffect(() => {
         getAddresses(auth.token)
@@ -36,14 +33,6 @@ export const CreateCardPage = () => {
         console.log(addressesList)
         M.FormSelect.init(selectRef.current)
     })
-
-    // useEffect(() => {
-    //     // const rows = document.querySelectorAll(`${testRef.current} tr`)
-    //
-    //
-    //     console.log(M.FormSelect.getInstance(selectRef.current).getSelectedValues())
-    //
-    // }, [])
 
 
     function handleAddressSelectChange(e) {
@@ -122,24 +111,20 @@ export const CreateCardPage = () => {
         )
     })
 
-
-    // function makeOptions() {
-    //     let arrayOfOptions = []
-    //
-    //     for (const [key, value] of Object.entries(grouped)) {
-    //         arrayOfOptions.push(
-    //             <optgroup label={key} key={key}>
-    //                 {value.map(crypto => {
-    //                     return <option value={crypto.id} key={crypto.id}
-    //                                    className="truncate">"{crypto.nickname}" {crypto.address}</option>
-    //                 })}
-    //             </optgroup>
-    //         )
-    //
-    //     }
-    //     return (arrayOfOptions)
-    // }
-
+    const handleCardSubmit = async () => {
+        try {
+            const data = await request('/api/card/add', 'POST', {cardTitle, selectedArray, description}, {
+                Authorization: `Bearer ${auth.token}`
+            })
+            setCardTitle('')
+            setSelectedArray([])
+            setDescription('')
+        } catch (e) {
+            console.log("Can't add new card", e)
+        } finally {
+            await getAddresses(auth.token)
+        }
+    }
 
     return (
         <div className="row">
@@ -166,6 +151,7 @@ export const CreateCardPage = () => {
                             <div key="1div" className="input-field">
                                 <select key="1select" name="rare_selection_name" id="rare_selection_id" ref={selectRef}
                                         onChange={handleAddressSelectChange}>
+                                    <option value="" disabled selected>Choose address to add</option>
                                     {GroupedOptions}
                                 </select>
                                 <label key="1label">Choose crypto-addresses</label>
