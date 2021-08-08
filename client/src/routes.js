@@ -5,9 +5,10 @@ import {DetailPage} from "./pages/CardPage";
 import {CreateCardPage} from "./pages/CreateCardPage";
 import {CardsPage} from "./pages/CardsPage";
 import {AddressesPage} from "./pages/AddressesPage";
+import {PublicCardPage} from "./pages/PublicCardPage";
 
 export const useRoutes = isAuthenticated => {
-    
+
     if (isAuthenticated) {
 
         return (
@@ -24,6 +25,9 @@ export const useRoutes = isAuthenticated => {
                 <Route path="/detail/:id">
                     <DetailPage/>
                 </Route>
+                <Route path="/c/:code" >
+                    <PublicCardPage />
+                </Route>
                 <Redirect to={"/create"}/>
             </Switch>
         )
@@ -33,6 +37,9 @@ export const useRoutes = isAuthenticated => {
         <Switch>
             <Route path="/main" exact>
                 <AuthPage/>
+            </Route>
+            <Route path="/c/:code" exact>
+                <PublicCardPage />
             </Route>
             <Redirect to="/main"/>
         </Switch>

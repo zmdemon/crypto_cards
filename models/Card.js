@@ -1,7 +1,7 @@
 const {Schema, model, Types} = require('mongoose')
 
 const cardSchema = new Schema({
-    title: {type: String, required: true, unique: false},
+    cardTitle: {type: String, required: true, unique: false},
     selectedArray: [{type: Types.ObjectId, ref: "Address"}],
     description: {type: String, required: false, unique: false},
     cardLink: {type: String, required: true, unique: true},

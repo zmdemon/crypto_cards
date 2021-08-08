@@ -1,18 +1,31 @@
 const {Router} = require("express");
-const Link = require("../models/Link");
+const Card = require("../models/Card");
+const Address = require("../models/Address");
 const router = Router()
+require("dotenv").config()
+
 
 router.get('/:code', async (req, res) => {
     try {
-        const link = await Link.findOne({code: req.params.code})
-        if (link) {
-            link.clicks++
-            await link.save()
-            return res.redirect(link.from)
+        const card = await Card.findOne({code: req.params.code})
+
+        if (card) {
+            card.clicks++
+            await card.save()
+            const extCard = {
+                ...card, selectedArray: card.selectedArray.map(async item => {
+                    return Address.findOne({_id: item});
+                })
+            }
+
+
+            // return res.redirect(process.env.BASE_URL + card.cardLink)
+            res.json(extCard)
+            // console.log(card.selectedArray)
         }
         res.status(404).json("Ссылку не нашел")
     } catch (e) {
-        res.status(500).json({message: 'Не то'})
+        res.status(500).json({message: 'Не редирект, а чмо'})
     }
 })
 

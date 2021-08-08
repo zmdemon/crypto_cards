@@ -119,10 +119,11 @@ export const CreateCardPage = () => {
             setCardTitle('')
             setSelectedArray([])
             setDescription('')
+            console.log("The Success Looks Like This: ", data)
         } catch (e) {
             console.log("Can't add new card", e)
         } finally {
-            await getAddresses(auth.token)
+
         }
     }
 
@@ -169,7 +170,7 @@ export const CreateCardPage = () => {
                     <label htmlFor="textarea1">Description for Card</label>
                 </div>
                 <div className="input-field col s12">
-                    <button className="btn waves-effect waves-light deep-purple" type="submit" name="action">Create
+                    <button className="btn waves-effect waves-light deep-purple" type="submit" name="action" onClick={handleCardSubmit}>Create
                         <i className="material-icons right">send</i>
                     </button>
                 </div>

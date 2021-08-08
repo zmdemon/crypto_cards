@@ -5,22 +5,19 @@ import {AuthContext} from '../context/AuthContext'
 import {Loader} from '../components/Loader'
 import {PublicCard} from '../components/PublicCard'
 
-export const DetailPage = () => {
-    const {token} = useContext(AuthContext)
+export const PublicCardPage = () => {
     const {request, loading} = useHttp()
     const [card, setCard] = useState(null)
-    const cardId = useParams().id
+    const cardCode = useParams().code
 
     const getCard = useCallback(async () => {
         try {
-            const fetched = await request(`/api/card/${cardId}`, 'GET', null, {
-                Authorization: `Bearer ${token}`
-            })
+            const fetched = await request(`/c/${cardCode}`, 'GET', null, {})
             setCard(fetched)
         } catch (e) {
 
         }
-    }, [token, cardId, request])
+    }, [cardCode, request])
 
     useEffect(() => {
         getCard()

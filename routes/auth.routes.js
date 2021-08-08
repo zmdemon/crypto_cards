@@ -48,8 +48,8 @@ router.post(
     [
         check('email', 'некорректный email').normalizeEmail().isEmail(),
         check('password', 'Введите пароль').exists()
-
     ],
+
     async (req, res) => {
         try {
             const errors = validationResult(req)
