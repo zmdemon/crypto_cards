@@ -7,7 +7,8 @@ import {PublicCard} from '../components/PublicCard'
 
 export const PublicCardPage = () => {
     const {request, loading} = useHttp()
-    const [card, setCard] = useState(null)
+    const [card, setCard] = useState({})
+    const [whiteCard, setWhiteCard] = useState({})
     const cardCode = useParams().code
 
     const getCard = useCallback(async () => {
@@ -23,14 +24,21 @@ export const PublicCardPage = () => {
         getCard()
     }, [getCard])
 
+    useEffect(() => {
+
+        const {clicks, owner, date, ...whiteCardFirst} = card
+        setWhiteCard(whiteCardFirst)
+
+    }, [card])
+
     if (loading) {
         return <Loader />
     }
 
     return (
-        <>
-            { !loading && card && <PublicCard card={card} /> }
-        </>
+        <div className="valign-wrapper " style={{height: '100vh',width: "100%", fontSize: '1.5rem' }}>
+            { !loading && card && <PublicCard card={whiteCard} /> }
+        </div>
     )
 }
 

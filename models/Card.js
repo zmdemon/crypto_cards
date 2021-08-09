@@ -2,8 +2,9 @@ const {Schema, model, Types} = require('mongoose')
 
 const cardSchema = new Schema({
     cardTitle: {type: String, required: true, unique: false},
-    selectedArray: [{type: Types.ObjectId, ref: "Address"}],
+    selectedArray: Array,
     description: {type: String, required: false, unique: false},
+    addresses: Array,
     cardLink: {type: String, required: true, unique: true},
     code: {type: String, required: true, unique: true},
     date: {type: Date, default: Date.now},

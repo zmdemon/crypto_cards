@@ -38,7 +38,7 @@ export const useRoutes = isAuthenticated => {
             <Route path="/main" exact>
                 <AuthPage/>
             </Route>
-            <Route path="/c/:code" exact>
+            <Route path="/c/:code" >
                 <PublicCardPage />
             </Route>
             <Redirect to="/main"/>

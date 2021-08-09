@@ -12,12 +12,12 @@ router.post("/add", auth, async (req, res) => {
         const code = shortid.generate()
 
 
-        const {cardTitle, selectedArray, description} = req.body
+        const {cardTitle, selectedArray, addresses, description} = req.body
 
         const cardLink = '/c/' + code
 
         const newCard = new Card({
-            cardTitle, selectedArray, description, cardLink, code, owner: req.user.userId
+            cardTitle, selectedArray, description, addresses, cardLink, code, owner: req.user.userId
         })
 
         await newCard.save()

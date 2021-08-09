@@ -10,22 +10,22 @@ export const CardsPage = () => {
 
     const {token} = useContext(AuthContext)
     const {request, loading} = useHttp()
-    const [links, setLinks] = useState([])
+    const [cards, setCards] = useState([])
 
-    const getLinks = useCallback(async () => {
+    const getCards = useCallback(async () => {
         try {
-            const fetched = await request(`/api/link`, 'GET', null, {
+            const fetched = await request(`/api/card`, 'GET', null, {
                 Authorization: `Bearer ${token}`
             })
-            setLinks(fetched)
+            setCards(fetched)
         } catch (e) {
 
         }
     }, [token, request])
 
     useEffect(() => {
-        getLinks()
-    }, [getLinks])
+        getCards()
+    }, [getCards])
 
     if (loading) {
         return <Loader />
@@ -35,7 +35,7 @@ export const CardsPage = () => {
     return (
         <div>
             <h1>My crypto business cards</h1>
-            { !loading && <CardsList addresses={links} /> }
+            { !loading && <CardsList cards={cards} /> }
         </div>
     )
 }

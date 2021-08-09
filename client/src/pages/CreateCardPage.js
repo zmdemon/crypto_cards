@@ -16,9 +16,9 @@ export const CreateCardPage = () => {
 
     const [selectedArray, setSelectedArray] = useState([])
     const {getAddresses, addressesList, setAddressesList} = useAddresses()
-    const [addressesListState, setAddressesListState] = useState([])
     const [description, setDescription] = useState("")
     const [cardTitle, setCardTitle] = useState("")
+    const [addresses, setAddresses] = useState([])
 
 
     const grouped = _.mapValues(_.groupBy(addressesList, 'currency'),
@@ -30,7 +30,12 @@ export const CreateCardPage = () => {
     }, [])
 
     useEffect(() => {
-        console.log(addressesList)
+        console.log(addresses)
+        setAddresses(selectedArray.map(item => item.address))
+
+    }, [selectedArray])
+
+    useEffect(() => {
         M.FormSelect.init(selectRef.current)
     })
 
@@ -75,30 +80,6 @@ export const CreateCardPage = () => {
         </li>)
     })
 
-    const RareOption = ({crypto}) => {
-        return (
-            <option value={crypto._id}>"{crypto.nickname}" {crypto.address}</option>
-        )
-    }
-    const RareOptGroup = ({label, currencyGroup}) => {
-        return (
-            <optgroup label={label}>
-                {currencyGroup.map(crypto => {
-                    return <RareOption crypto={crypto}/>
-                })}
-            </optgroup>
-        )
-    }
-    const RareGroupedOptions = Object.entries(grouped).map(item => {
-        return (
-            <RareOptGroup label={item[0].toString()} key={item[0].toString()} currencyGroup={item[1]}>
-                {item[1].map(crypto => {
-                    return <RareOption crypto={crypto} key={crypto.id}/>
-                })}
-            </RareOptGroup>
-        )
-    })
-
 
     const GroupedOptions = Object.entries(grouped).map(item => {
         return (
@@ -113,9 +94,16 @@ export const CreateCardPage = () => {
 
     const handleCardSubmit = async () => {
         try {
-            const data = await request('/api/card/add', 'POST', {cardTitle, selectedArray, description}, {
+            const data = await request('/api/card/add', 'POST', {
+                cardTitle,
+                selectedArray,
+                addresses,
+                description
+            }, {
                 Authorization: `Bearer ${auth.token}`
             })
+
+            console.log(data)
             setCardTitle('')
             setSelectedArray([])
             setDescription('')
@@ -170,7 +158,8 @@ export const CreateCardPage = () => {
                     <label htmlFor="textarea1">Description for Card</label>
                 </div>
                 <div className="input-field col s12">
-                    <button className="btn waves-effect waves-light deep-purple" type="submit" name="action" onClick={handleCardSubmit}>Create
+                    <button className="btn waves-effect waves-light deep-purple" type="submit" name="action"
+                            onClick={handleCardSubmit}>Create
                         <i className="material-icons right">send</i>
                     </button>
                 </div>
