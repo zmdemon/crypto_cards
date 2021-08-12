@@ -4,6 +4,45 @@ import {AuthContext} from "../context/AuthContext";
 import {useHttp} from "../hooks/http.hook";
 import {useAddresses} from "../hooks/addresses.hook";
 
+const currencyCodes = [
+    {
+        fullCurrency: 'Bitcoin',
+        codeCurrency: 'BTC'
+    },
+    {
+        fullCurrency: 'Ethereum',
+        codeCurrency: 'ETH'
+    },
+    {
+        fullCurrency: 'Cardano',
+        codeCurrency: 'ADA'
+    },
+    {
+        fullCurrency: 'Bitcoin Cash',
+        codeCurrency: 'BCH'
+    },
+    {
+        fullCurrency: 'LiteCoin',
+        codeCurrency: 'LTC'
+    },
+    {
+        fullCurrency: 'Zcash',
+        codeCurrency: 'ZEC'
+    },
+    {
+        fullCurrency: 'Monero',
+        codeCurrency: 'XMR'
+    },
+    {
+        fullCurrency: 'Neo',
+        codeCurrency: 'NEO'
+    },
+    {
+        fullCurrency: 'Doge Coin',
+        codeCurrency: 'doge'
+    },
+]
+
 
 export const AddressesPage = () => {
     const counter = document.querySelectorAll('.counterful');
@@ -18,9 +57,11 @@ export const AddressesPage = () => {
 
     useEffect(() => {
         M.AutoInit();
-        M.CharacterCounter.init(counter);
     }, [])
 
+    useEffect(() => {
+        M.CharacterCounter.init(counter);
+    }, [])
 
 
     useEffect(() => {
@@ -34,6 +75,12 @@ export const AddressesPage = () => {
                 <td>{item.currency}</td>
                 <td>{item.address}</td>
             </tr>
+        )
+    })
+
+    const currencyOptions = currencyCodes.map(item => {
+        return (
+            <option key={item.fullCurrency} value={item.codeCurrency}>{item.codeCurrency} / {item.fullCurrency}</option>
         )
     })
 
@@ -81,7 +128,7 @@ export const AddressesPage = () => {
                 <div className="modal-content">
                     <h4>Add new newAddress</h4>
                     <div className="row">
-                        <div className="input-field col s6">
+                        <div className="input-field col s12">
                             <label htmlFor="newAddress-nickname">Short name</label>
                             <input
                                 value={nickname}
@@ -92,19 +139,20 @@ export const AddressesPage = () => {
                                 className="counterful center-align"/>
                         </div>
 
-                        <div className="input-field col s4 m6">
-                            <select className="icons" onChange={e => setCurrency(e.target.value)}>
+                        <div className="input-field col s12 m12">
+                            <select className="icons dropdown-content-mini" onChange={e => setCurrency(e.target.value)}>
                                 <option value="null" disabled selected>Choose your option</option>
-                                <option value="BTC" data-icon="">BTC</option>
-                                <option value="ETH" data-icon="">ETH</option>
-                                <option value="ADA" data-icon="">Cardano</option>
+                                {/*<option value="BTC" data-icon="">BTC</option>*/}
+                                {/*<option value="ETH" data-icon="">ETH</option>*/}
+                                {/*<option value="ADA" data-icon="">Cardano</option>*/}
+                                {currencyOptions}
                             </select>
                             <label>Types</label>
                         </div>
                     </div>
                     <div className="row">
 
-                        <div className="input-field col s8">
+                        <div className="input-field col s12">
                             <input
                                 type="text"
                                 id="newAddress"

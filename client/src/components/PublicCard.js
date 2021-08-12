@@ -16,6 +16,7 @@ export const PublicCard = ({card}) => {
                         <div className="card-content white-text">
                             <h5 className="card-title">{card.cardTitle}</h5>
                             <p>{card.description}</p>
+
                         </div>
                         <ul className="collection truncate">{selectedAddressesLis}</ul>
                     </div>

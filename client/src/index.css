@@ -25,6 +25,12 @@
   -webkit-backface-visibility: hidden !important;
   backface-visibility: hidden !important;
 }
+.dropdown-content-mini {
+  max-height: 150px !important;
+  overflow-y: auto !important;
+  -webkit-backface-visibility: hidden !important;
+  backface-visibility: hidden !important;
+}
 
 .collection {
 
