@@ -19,11 +19,18 @@ router.get('/:code', async (req, res) => {
             // }
 
             // return res.redirect(process.env.BASE_URL + card.cardLink)
-            // const {clicks, owner, date, ...whiteCard} = card
+            const {cardTitle, description, selectedArray, ...whiteCard} = await card.toObject()
+            const rareArray = selectedArray.map(it => {
+                const {currency, address} = it
+                return {currency, address}
+            })
+            const cake = {
+                cardTitle, description, rareArray
+            }
             // const { ...whiteCard} = await card
-            const whiteCard = card
-            res.json(card)
-            console.log(card)
+            // const whiteCard = {...card.toObject(), hi: "mark"}
+            res.json(cake)
+            console.log(cake)
         }
         res.status(404).json("Ссылку не нашел")
     } catch (e) {

@@ -37,7 +37,7 @@ export const PublicCardPage = () => {
 
     return (
         <div className="valign-wrapper " style={{height: '100vh',width: "100%", fontSize: '1.5rem' }}>
-            { !loading && card && <PublicCard card={whiteCard} /> }
+            { !loading && card && <PublicCard card={card} /> }
         </div>
     )
 }

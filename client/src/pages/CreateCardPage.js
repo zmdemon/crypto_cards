@@ -19,6 +19,7 @@ export const CreateCardPage = () => {
     const [description, setDescription] = useState("")
     const [cardTitle, setCardTitle] = useState("")
     const [addresses, setAddresses] = useState([])
+    // const [selected, setSelected] = useState("")
 
 
     const grouped = _.mapValues(_.groupBy(addressesList, 'currency'),
@@ -30,7 +31,7 @@ export const CreateCardPage = () => {
     }, [])
 
     useEffect(() => {
-        console.log(addresses)
+        // console.log(addresses)
         setAddresses(selectedArray.map(item => item.address))
 
     }, [selectedArray])
@@ -41,18 +42,20 @@ export const CreateCardPage = () => {
 
 
     function handleAddressSelectChange(e) {
-        const addressString = e.target.value.split(" ").sort(
-            function (a, b) {
-                return b.length - a.length;
-            }
-        )[0]
-        const addressObject = addressesList.filter((it) => it.address === addressString)[0]
+        const optionId = e.target.value
+        // const addressString = e.target.value.split(" ").sort(
+        //     function (a, b) {
+        //         return b.length - a.length;
+        //     }
+        // )[0]
+        const addressObject = addressesList.filter((it) => it._id === optionId)[0]
         setSelectedArray(previous => [...previous, addressObject])
         setAddressesList(addressesList.map(item => {
             if (item._id === addressObject._id) {
                 return {...item, disabled: true}
             } else return item
         }))
+
 
     }
 
@@ -65,7 +68,7 @@ export const CreateCardPage = () => {
             } else return item
         }))
 
-        console.log(selectedArray)
+        // console.log(selectedArray)
     }
 
     const selectedAddressesLis = selectedArray.map((item) => {
@@ -85,7 +88,7 @@ export const CreateCardPage = () => {
         return (
             <optgroup label={item[0].toString()} key={item[0].toString()}>
                 {item[1].map(crypto => {
-                    return <option value={crypto.id} key={crypto.id}
+                    return <option value={crypto._id} key={crypto._id}
                                    disabled={crypto.disabled}>"{crypto.nickname}" {crypto.address}</option>
                 })}
             </optgroup>
@@ -103,11 +106,11 @@ export const CreateCardPage = () => {
                 Authorization: `Bearer ${auth.token}`
             })
 
-            console.log(data)
+            // console.log(data)
             setCardTitle('')
             setSelectedArray([])
             setDescription('')
-            console.log("The Success Looks Like This: ", data)
+            // console.log("The Success Looks Like This: ", data)
         } catch (e) {
             console.log("Can't add new card", e)
         } finally {
@@ -138,9 +141,10 @@ export const CreateCardPage = () => {
 
                         <li key="1li" className="collection-item">
                             <div key="1div" className="input-field">
-                                <select key="1select" name="rare_selection_name" id="rare_selection_id" ref={selectRef}
+                                <select key="1select" value={""} name="rare_selection_name" id="rare_selection_id"
+                                        ref={selectRef}
                                         onChange={handleAddressSelectChange}>
-                                    <option value="" disabled selected>Choose address to add</option>
+                                    <option value="" disabled>Choose address to add</option>
                                     {GroupedOptions}
                                 </select>
                                 <label key="1label">Choose crypto-addresses</label>
