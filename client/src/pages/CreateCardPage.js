@@ -28,7 +28,7 @@ export const CreateCardPage = () => {
 
     useEffect(() => {
         getAddresses(auth.token)
-    }, [])
+    }, [getAddresses, auth.token])
 
     useEffect(() => {
         // console.log(addresses)
@@ -97,7 +97,7 @@ export const CreateCardPage = () => {
 
     const handleCardSubmit = async () => {
         try {
-            const data = await request('/api/card/add', 'POST', {
+            await request('/api/card/add', 'POST', {
                 cardTitle,
                 selectedArray,
                 addresses,

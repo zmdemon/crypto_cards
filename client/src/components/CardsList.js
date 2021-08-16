@@ -13,6 +13,7 @@ export const CardsList = ({ cards }) => {
                 <th>№</th>
                 <th>Name</th>
                 <th>Description</th>
+                <th>Short link</th>
                 <th>Открыть</th>
             </tr>
             </thead>
@@ -24,6 +25,8 @@ export const CardsList = ({ cards }) => {
                         <td>{index + 1}</td>
                         <td>{card.cardTitle}</td>
                         <td>{card.description}</td>
+                        <td><a href={'http://localhost:3000'+card.cardLink.toString()}>http://localhost:3000 {card.cardLink}</a></td>
+
                         <td>
                             <Link to={`/detail/${card._id}`}>Открыть</Link>
                         </td>

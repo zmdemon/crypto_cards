@@ -1,7 +1,6 @@
 const {Router} = require("express");
 const Card = require("../models/Card");
 const auth = require("../middleware/auth.middleware");
-const config = require("config");
 const shortid = require("shortid");
 require("dotenv").config()
 const router = Router()

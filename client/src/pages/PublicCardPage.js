@@ -1,15 +1,14 @@
 import React, {useCallback, useContext, useEffect, useState} from 'react'
 import {useParams} from 'react-router-dom'
 import {useHttp} from '../hooks/http.hook'
-import {AuthContext} from '../context/AuthContext'
 import {Loader} from '../components/Loader'
 import {PublicCard} from '../components/PublicCard'
 
 export const PublicCardPage = () => {
     const {request, loading} = useHttp()
     const [card, setCard] = useState({})
-    const [whiteCard, setWhiteCard] = useState({})
     const cardCode = useParams().code
+
 
     const getCard = useCallback(async () => {
         try {
@@ -24,12 +23,6 @@ export const PublicCardPage = () => {
         getCard()
     }, [getCard])
 
-    useEffect(() => {
-
-        const {clicks, owner, date, ...whiteCardFirst} = card
-        setWhiteCard(whiteCardFirst)
-
-    }, [card])
 
     if (loading) {
         return <Loader />

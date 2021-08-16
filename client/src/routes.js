@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {Switch, Route, Redirect} from 'react-router-dom'
 import {AuthPage} from "./pages/AuthPage";
 import {DetailPage} from "./pages/CardPage";
@@ -25,8 +25,8 @@ export const useRoutes = isAuthenticated => {
                 <Route path="/detail/:id">
                     <DetailPage/>
                 </Route>
-                <Route path="/c/:code" >
-                    <PublicCardPage />
+                <Route path="/c/:code">
+                    <PublicCardPage/>
                 </Route>
                 <Redirect to={"/create"}/>
             </Switch>
@@ -38,8 +38,8 @@ export const useRoutes = isAuthenticated => {
             <Route path="/main" exact>
                 <AuthPage/>
             </Route>
-            <Route path="/c/:code" >
-                <PublicCardPage />
+            <Route path="/c/:code">
+                <PublicCardPage/>
             </Route>
             <Redirect to="/main"/>
         </Switch>

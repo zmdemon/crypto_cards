@@ -18,7 +18,7 @@ const {request} = useHttp()
             console.log(e.message)
 
         }
-    }, [])
+    }, [request])
 
 
     return { getAddresses, addressesList, setAddressesList }

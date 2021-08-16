@@ -61,12 +61,12 @@ export const AddressesPage = () => {
 
     useEffect(() => {
         M.CharacterCounter.init(counter);
-    }, [])
+    }, [counter])
 
 
     useEffect(() => {
         getAddresses(auth.token)
-    }, [])
+    }, [getAddresses, auth.token])
 
     const addressesMixedList = addressesList.map((item) => {
         return (
@@ -86,7 +86,7 @@ export const AddressesPage = () => {
 
     const handleAddressSubmit = async () => {
         try {
-            const data = await request('/api/address/add', 'POST', {address: newAddress, currency, nickname}, {
+            await request('/api/address/add', 'POST', {address: newAddress, currency, nickname}, {
                 Authorization: `Bearer ${auth.token}`
             })
             setCurrency('')

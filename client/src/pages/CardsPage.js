@@ -1,9 +1,7 @@
 import React, {useCallback, useContext, useEffect, useState} from 'react'
 import {AuthContext} from "../context/AuthContext";
 import {useHttp} from "../hooks/http.hook";
-import {useParams} from "react-router-dom";
 import {Loader} from "../components/Loader";
-import {PublicCard} from "../components/PublicCard";
 import {CardsList} from "../components/CardsList";
 
 export const CardsPage = () => {

@@ -1,12 +1,12 @@
-export const PublicCard = ({card}) => {
+export const UserCard = ({card}) => {
 
-    const cryptoList = card.cryptos?.map((item) => {
+    const cryptoList = card.selectedArray?.map((item) => {
         return (<li className="collection-item " key={item.address}>
             <div className="truncate" key={item.address} style={{paddingTop: '1.2rem', paddingBottom: '1.2rem'}}>{item.currency} - {item.address}
             </div>
         </li>)
     })
-    // console.log(card.selectedArray)
+    console.log(card.selectedArray)
     return (
 
         <>

@@ -3,7 +3,7 @@ import {useParams} from 'react-router-dom'
 import {useHttp} from '../hooks/http.hook'
 import {AuthContext} from '../context/AuthContext'
 import {Loader} from '../components/Loader'
-import {PublicCard} from '../components/PublicCard'
+import {UserCard} from "../components/UserCard";
 
 export const DetailPage = () => {
     const {token} = useContext(AuthContext)
@@ -27,13 +27,14 @@ export const DetailPage = () => {
     }, [getCard])
 
     if (loading) {
-        return <Loader />
+        return <Loader/>
     }
 
     return (
         <>
-            { !loading && card && <PublicCard card={card} /> }
+            {!loading && card && <UserCard card={card}/>}
         </>
     )
 }
+
 
