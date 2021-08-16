@@ -1,10 +1,8 @@
-const {Router} = require("express");
-const Card = require("../models/Card");
-const Address = require("../models/Address");
+const {Router} = require("express")
+const Card = require("../models/Card")
 const router = Router()
 require("dotenv").config()
-const middleware = require("../middleware/public.middleware");
-const auth = require("../middleware/auth.middleware");
+
 
 
 router.get('/:code',  async (req, res) => {

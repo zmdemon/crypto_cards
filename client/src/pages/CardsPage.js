@@ -21,19 +21,34 @@ export const CardsPage = () => {
         }
     }, [token, request])
 
+    const handleCardDelete = async (id) => {
+
+        try {
+            await request(`/api/card/delete/${id}`, 'GET', null, {
+                Authorization: `Bearer ${token}`
+            })
+            await getCards()
+
+        } catch (e) {
+            console.log(e.value)
+        }
+
+    }
+
+
     useEffect(() => {
         getCards()
     }, [getCards])
 
     if (loading) {
-        return <Loader />
+        return <Loader/>
     }
 
 
     return (
         <div>
             <h1>My crypto business cards</h1>
-            { !loading && <CardsList cards={cards} /> }
+            {!loading && <CardsList cards={cards} onCardDelete={handleCardDelete}/>}
         </div>
     )
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 
-export const CardsList = ({ cards }) => {
+export const CardsList = ({cards, onCardDelete}) => {
     if (!cards.length) {
         return <p className="center">Add some crypto cards</p>
     }
@@ -15,24 +15,28 @@ export const CardsList = ({ cards }) => {
                 <th>Description</th>
                 <th>Short link</th>
                 <th>Открыть</th>
+                <th>Удалить</th>
             </tr>
             </thead>
 
             <tbody>
-            { cards.map((card, index) => {
+            {cards.map((card, index) => {
                 return (
                     <tr key={card._id}>
                         <td>{index + 1}</td>
                         <td>{card.cardTitle}</td>
                         <td>{card.description}</td>
-                        <td><a href={'http://localhost:3000'+card.cardLink.toString()}>http://localhost:3000 {card.cardLink}</a></td>
+                        <td><a
+                            href={'http://localhost:3000' + card.cardLink.toString()}>http://localhost:3000 {card.cardLink}</a>
+                        </td>
 
                         <td>
                             <Link to={`/detail/${card._id}`}>Открыть</Link>
                         </td>
+                        <td><button onClick={() => onCardDelete(card._id)}>Удалить</button></td>
                     </tr>
                 )
-            }) }
+            })}
             </tbody>
         </table>
     )

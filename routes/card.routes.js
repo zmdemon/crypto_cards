@@ -7,7 +7,7 @@ const router = Router()
 
 router.post("/add", auth, async (req, res) => {
     try {
-        const baseUrl = process.env.BASE_URL
+        // const baseUrl = process.env.BASE_URL
         const code = shortid.generate()
 
 
@@ -45,6 +45,18 @@ router.get("/:id", auth, async (req, res) => {
         res.json(card)
     } catch (e) {
         res.status(500).json({message: 'Card was not found by id'})
+    }
+})
+router.get("/delete/:id", auth, async (req, res) => {
+    try {
+       await Card.findOneAndDelete({_id: req.params.id}, function (err, card) {
+            if (err)
+                throw err;
+            else
+                res.json(card)
+        })
+    } catch (e) {
+        res.status(500).json({message: 'Card was not deleted'})
     }
 })
 
