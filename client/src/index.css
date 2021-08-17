@@ -37,3 +37,20 @@
   overflow: visible !important;
   position: static !important;
 }
+
+a.sidenav-trigger.top-nav {
+  position: absolute;
+  text-align: center;
+  height: 48px;
+  width: 48px;
+  top: 4px;
+  float: none;
+  margin-left: 1.5rem;
+  color: whitesmoke;
+  font-size: 36px;
+  z-index: 2;
+}
+
+a.sidenav-trigger.top-nav i {
+  font-size: 32px;
+}
