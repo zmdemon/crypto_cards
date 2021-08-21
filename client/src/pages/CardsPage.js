@@ -6,8 +6,8 @@ import {CardsList} from "../components/CardsList";
 
 export const CardsPage = () => {
 
-    const {token} = useContext(AuthContext)
-    const {request, loading} = useHttp()
+    const {token,logout} = useContext(AuthContext)
+    const {request, loading} = useHttp(logout)
     const [cards, setCards] = useState([])
 
     const getCards = useCallback(async () => {

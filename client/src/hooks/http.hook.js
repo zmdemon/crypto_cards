@@ -1,6 +1,6 @@
 import {useState, useCallback} from 'react'
 
-export const useHttp = () => {
+export const useHttp = (logout = ()=>{}) => {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
 
@@ -23,8 +23,14 @@ export const useHttp = () => {
 
             return data
         } catch (e) {
+            if (e.message==='Нет авторизации') {
+                // console.log(e.message)
+
+                logout()
+            }
             setLoading(false)
             setError(e.message)
+            // console.log(e.message)
             throw e
         }
     }, [])

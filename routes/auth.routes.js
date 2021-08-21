@@ -80,7 +80,7 @@ router.post(
             const token = jwt.sign(
                 {userId: user.id},
                 process.env.JWT_SECRET,
-                {expiresIn: '24h'}
+                {expiresIn: "72h"}
             )
             res.json({token, userId: user.id})
 

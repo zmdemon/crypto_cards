@@ -4,18 +4,21 @@ import {AuthContext} from "../context/AuthContext";
 import M from "materialize-css";
 import {useAddresses} from "../hooks/addresses.hook";
 import {useHttp} from "../hooks/http.hook";
+import {useAuth} from "../hooks/auth.hook";
+import {Loader} from "../components/Loader";
 
 
 const _ = require('lodash');
 
 
 export const CreateCardPage = () => {
+    const {request, loading} = useHttp()
     const selectRef = useRef(null)
-    const {request} = useHttp()
     const auth = useContext(AuthContext)
 
     const [selectedArray, setSelectedArray] = useState([])
-    const {getAddresses, addressesList, setAddressesList} = useAddresses()
+    // const {logout} = useAuth()
+    const {getAddresses, addressesList, setAddressesList} = useAddresses(auth.logout)
     const [description, setDescription] = useState("")
     const [cardTitle, setCardTitle] = useState("")
     const [addresses, setAddresses] = useState([])
@@ -116,6 +119,10 @@ export const CreateCardPage = () => {
         } finally {
 
         }
+    }
+
+    if (loading) {
+        return <Loader/>
     }
 
     return (

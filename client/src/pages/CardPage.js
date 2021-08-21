@@ -6,8 +6,8 @@ import {Loader} from '../components/Loader'
 import {UserCard} from "../components/UserCard";
 
 export const DetailPage = () => {
-    const {token} = useContext(AuthContext)
-    const {request, loading} = useHttp()
+    const {token, logout} = useContext(AuthContext)
+    const {request, loading} = useHttp(logout)
     const [card, setCard] = useState(null)
     const cardId = useParams().id
 

@@ -45,10 +45,10 @@ const currencyCodes = [
 
 
 export const AddressesPage = () => {
-    const counter = document.querySelectorAll('.counterful');
     const auth = useContext(AuthContext)
     const {request} = useHttp()
-    const {getAddresses, addressesList} = useAddresses()
+    const counter = document.querySelectorAll('.counterful');
+    const {getAddresses, addressesList} = useAddresses(auth.logout)
 
     const [newAddress, setNewAddress] = useState('')
     const [nickname, setNickname] = useState('')
