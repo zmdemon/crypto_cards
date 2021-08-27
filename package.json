@@ -4,10 +4,15 @@
   "description": "make online business cards with your cryptocurrency addresses ",
   "main": "app.js",
   "scripts": {
+    "build": "cd client && npm run build",
+    "install-client": "cd client && npm install",
+    "heroku-postbuild": "npm run install-client && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "nodemon app.js",
     "client": "npm run start --prefix client",
-    "dev": "concurrently \"npm run server\"  \"npm run client\" "
+    "dev": "concurrently \"npm run server\"  \"npm run client\" ",
+    "develop": "concurrently --kill-others-on-fail \"npm run server\" \"npm run start --prefix client\"",
+    "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run start --prefix client\""
   },
   "keywords": [
     "crypto",
